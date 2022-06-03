@@ -8,7 +8,7 @@ type DeployParams = Record<string, ProgramParams>;
 
 export const programParams: DeployParams = {
   goerli: {
-    programImplementationContract: '0x585F25C3c2Eb15a32C54E3Aa24361B371206129C',
-    programFactoryContract: '0xc2A3EB8b0aaFd6119a47AFa729722D300C94e48b'
+    programImplementationContract: '0x6D22c31ea600E3846B6675a0c0427505Cd2BDF7e',
+    programFactoryContract: '0x13B2dE16723173389377BE398E1b0EAc3f017a45'
   },
 };

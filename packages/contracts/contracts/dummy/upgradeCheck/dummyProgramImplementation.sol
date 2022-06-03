@@ -5,61 +5,38 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-import "../utils/MetaPtr.sol";
+import "../../utils/MetaPtr.sol";
 
 
-/**
- * @notice Program which would managed by a group of 
- * PROGRAM_OPERATOR deployed via the ProgramFactory
- */
-contract ProgramImplementation is AccessControl, Initializable {
+/// THIS IS A DUMMY CONTRACT. DO NOT USE THIS
+contract DummyProgramImplementation is AccessControl, Initializable {
 
-  // --- Libraries ---
   using Address for address;
 
-  // --- Roles ---
-
-  /// @notice program operator role
   bytes32 public constant PROGRAM_OPERATOR_ROLE = keccak256("PROGRAM_OPERATOR");
 
-  // --- Events ---
-
-  /// @notice Emitted when a team metadata pointer is updated
   event MetadataUpdated(MetaPtr oldMetaPtr, MetaPtr newMetaPtr);
 
-  // --- Data ---
-
-  /// @notice URL pointing for program metadata (for off-chain use)
   MetaPtr public metaPtr;
+  string public message;
 
-
-  // --- Core methods ---
-
-  /**
-   * @notice Instantiates a new program
-   * @param _metaPtr URL pointing to the program metadata
-   * @param _adminRole Address to be granted DEFAULT_ADMIN_ROLE
-   * @param _programOperators Addresses to be granted PROGRAM_OPERATOR_ROLE
-   */
   function initialize(
     MetaPtr memory _metaPtr,
     address _adminRole,
-    address[] memory _programOperators
+    address[] memory _programOperators, 
+    string calldata _message
   ) public initializer {
   
     metaPtr = _metaPtr;
+    message = _message;
 
-    // assign roles
     _grantRole(DEFAULT_ADMIN_ROLE, _adminRole);
 
-    // Assigning program operators
     for (uint256 i = 0; i < _programOperators.length; ++i) {
       _grantRole(PROGRAM_OPERATOR_ROLE, _programOperators[i]);
     }
   }
 
-  // @notice Update metaPtr (only by PROGRAM_OPERATOR_ROLE)
-  /// @param _newMetaPtr new metaPtr
   function updateMetaPtr(MetaPtr memory _newMetaPtr) public onlyRole(PROGRAM_OPERATOR_ROLE) {
     emit MetadataUpdated(metaPtr, _newMetaPtr);
     metaPtr = _newMetaPtr;
