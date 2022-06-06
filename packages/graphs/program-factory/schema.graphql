@@ -1,0 +1,10 @@
+type Programs @entity {
+  id: Bytes!
+  program: Program
+}
+
+type Program @entity {
+  id: Bytes!
+  operator: [Bytes]
+  metaPtr: String
+}

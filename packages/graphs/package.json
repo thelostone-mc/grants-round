@@ -1,0 +1,33 @@
+{
+  "name": "@grants-round/graphs",
+  "version": "0.0.1",
+  "description": "> TODO: description",
+  "keywords": [
+    "graph",
+    "subgraph"
+  ],
+  "author": "Aditya Anand M C <aditya.anandmc@gmail.com>",
+  "homepage": "https://github.com/gitcoinco/grants-round#readme",
+  "license": "AGPL-3.0-only",
+  "main": "lib/graphs.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitcoinco/grants-round.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/gitcoinco/grants-round/issues"
+  }
+}

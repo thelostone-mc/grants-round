@@ -1,0 +1,30 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ProgramFactory
+    network: goerli
+    source:
+      address: "0xc2A3EB8b0aaFd6119a47AFa729722D300C94e48b"
+      abi: ProgramFactory
+      startBlock: 6981600 
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - ProgramContractUpdated
+        - ProgramCreated
+      abis:
+        - name: ProgramFactory
+          file: ./abis/ProgramFactory.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProgramContractUpdated(address)
+          handler: handleProgramContractUpdated
+        - event: ProgramCreated(address)
+          handler: handleProgramCreated
+      file: ./src/program-factory.ts
