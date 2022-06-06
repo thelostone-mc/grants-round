@@ -11,61 +11,119 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
-  constructor(id: string) {
+export class ProgramList extends Entity {
+  constructor(id: Bytes) {
     super();
-    this.set("id", Value.fromString(id));
+    this.set("id", Value.fromBytes(id));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save ProgramList entity without an ID");
     if (id) {
       assert(
-        id.kind == ValueKind.STRING,
-        `Entities of type ExampleEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        id.kind == ValueKind.BYTES,
+        `Entities of type ProgramList must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("ProgramList", id.toBytes().toHexString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: Bytes): ProgramList | null {
+    return changetype<ProgramList | null>(
+      store.get("ProgramList", id.toHexString())
+    );
   }
 
-  get id(): string {
+  get id(): Bytes {
     let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get count(): BigInt {
-    let value = this.get("count");
-    return value!.toBigInt();
-  }
-
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
-  }
-
-  get previousOwner(): Bytes {
-    let value = this.get("previousOwner");
     return value!.toBytes();
   }
 
-  set previousOwner(value: Bytes) {
-    this.set("previousOwner", Value.fromBytes(value));
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
   }
 
-  get newOwner(): Bytes {
-    let value = this.get("newOwner");
+  get program(): Bytes | null {
+    let value = this.get("program");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytes();
+    }
+  }
+
+  set program(value: Bytes | null) {
+    if (!value) {
+      this.unset("program");
+    } else {
+      this.set("program", Value.fromBytes(<Bytes>value));
+    }
+  }
+}
+
+export class Program extends Entity {
+  constructor(id: Bytes) {
+    super();
+    this.set("id", Value.fromBytes(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Program entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.BYTES,
+        `Entities of type Program must have an ID of type Bytes but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Program", id.toBytes().toHexString(), this);
+    }
+  }
+
+  static load(id: Bytes): Program | null {
+    return changetype<Program | null>(store.get("Program", id.toHexString()));
+  }
+
+  get id(): Bytes {
+    let value = this.get("id");
     return value!.toBytes();
   }
 
-  set newOwner(value: Bytes) {
-    this.set("newOwner", Value.fromBytes(value));
+  set id(value: Bytes) {
+    this.set("id", Value.fromBytes(value));
+  }
+
+  get operator(): Array<Bytes> | null {
+    let value = this.get("operator");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBytesArray();
+    }
+  }
+
+  set operator(value: Array<Bytes> | null) {
+    if (!value) {
+      this.unset("operator");
+    } else {
+      this.set("operator", Value.fromBytesArray(<Array<Bytes>>value));
+    }
+  }
+
+  get metaPtr(): string | null {
+    let value = this.get("metaPtr");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set metaPtr(value: string | null) {
+    if (!value) {
+      this.unset("metaPtr");
+    } else {
+      this.set("metaPtr", Value.fromString(<string>value));
+    }
   }
 }

@@ -1,10 +1,10 @@
-type Programs @entity {
+type ProgramList @entity {
   id: Bytes!
   program: Program
 }
 
 type Program @entity {
   id: Bytes!
-  operator: [Bytes]
+  operator: [Bytes!]
   metaPtr: String
 }

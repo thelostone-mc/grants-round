@@ -14,17 +14,12 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - OwnershipTransferred
-        - ProgramContractUpdated
-        - ProgramCreated
+        - ProgramList
+        - Program
       abis:
         - name: ProgramFactory
           file: ./abis/ProgramFactory.json
       eventHandlers:
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: handleOwnershipTransferred
-        - event: ProgramContractUpdated(address)
-          handler: handleProgramContractUpdated
         - event: ProgramCreated(address)
           handler: handleProgramCreated
       file: ./src/program-factory.ts
